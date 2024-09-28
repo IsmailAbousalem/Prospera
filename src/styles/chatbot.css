@@ -1,0 +1,33 @@
+.chatbot {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+  }
+  
+  .chat-window {
+    height: 300px;
+    overflow-y: scroll;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    margin: 10px 0;
+  }
+  
+  .message.user {
+    text-align: right;
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    margin-right: 5px;
+  }
+  
+  button {
+    padding: 10px;
+  }
+  
