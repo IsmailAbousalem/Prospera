@@ -98,7 +98,7 @@ export function FinancialHealthTrackerComponent() {
 
   return (
     (<div
-      className="min-h-screen bg-gradient-to-br from-amber-100 to-red-200 flex items-center justify-center p-4">
+      className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
         <AnimatePresence>
           {!isSubmitted && (

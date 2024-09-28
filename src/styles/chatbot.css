@@ -8,26 +8,30 @@
   .chat-window {
     height: 300px;
     overflow-y: scroll;
-    background: #f9f9f9;
+    background: black;
     padding: 10px;
     margin-bottom: 10px;
   }
   
   .message {
     margin: 10px 0;
+    color: white;
   }
   
   .message.user {
     text-align: right;
+    color: white;
   }
   
   input {
     width: 80%;
     padding: 10px;
     margin-right: 5px;
+    color: white;
   }
   
   button {
     padding: 10px;
+    color: white;
   }
   
