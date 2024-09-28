@@ -1,8 +1,10 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100vw;  /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  margin: 0;     /* Remove default margin */
+  padding: 0;    /* Remove default padding */
+  display: flex; /* Optional: Use flexbox for layout */
+  flex-direction: column; /* Optional: Stack children vertically */
 }
 
 .logo {
