@@ -1,6 +1,6 @@
 ![Foxy](src/assets/prosperatitle.png) 
 # Prospero (AI-Powered Financial Educational App for Low-Income Immigrants)
-
+## Team: Abel Chacko Mathew, Ismail Abousalem, Domenica Simbana Mosquera, Shanice Bandoo
 ## Vision
 After our team experienced firsthand how financial literacy impacted some of our immigrant parents, we wanted to help other immigrant families with limited resources feel empowered to start their financial journey correctly while balancing the challenges of adjusting to a new place. With Prospera, we made it easier by avoiding overwhelming statistics and instead using Foxy, a friendly avatar that visually represents their financial status. By analyzing income, spending, and dependents, Prospera provides personalized scores, actionable tips, and guidance to help users improve their financial habits and boost their FICO scores.
 
