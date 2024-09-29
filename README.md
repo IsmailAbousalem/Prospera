@@ -1,6 +1,9 @@
+![Foxy](src/assets/prosperatitle.png) 
 # Prospero (AI-Powered Financial Educational App for Low-Income Immigrants)
 
 ## Vision
+
+
 
 ## Challenges
 

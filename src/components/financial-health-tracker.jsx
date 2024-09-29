@@ -97,11 +97,10 @@ export function FinancialHealthTrackerComponent() {
   const financialScore = calculateFinancialScore()
 
   const getFinancialMood = (score) => {
-    if (score >= 75) return <img src='/src/assets/happy1.png' alt="Happy Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    if (score >= 50) return <img src='/src/assets/sur1.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    if (score >= 25 ) return <img src='/src/assets/sick1.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    return <img src='/src/assets/sad1.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
-
+    if (score >= 75) return <img src='src/assets/happy1.png' alt="Happy Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score >= 50) return <img src='src/assets/sur1.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score >= 25 ) return <img src='src/assets/sick1.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    return <img src='src/assets/sad1.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
   }
 
   const handleInputChange = (e) => {
@@ -193,31 +192,34 @@ export function FinancialHealthTrackerComponent() {
                     <div className="space-y-2">
                       <Label className="text-amber-700">Do you have a credit score?</Label>
                       <RadioGroup
-                        defaultValue={financialData.hasCreditScore ? 'yes' : 'no'}
-                        onValueChange={(value) => {
-                          const updatedData = {
-                            ...financialData,
-                            hasCreditScore: value === 'yes',
-                            creditScore: value === 'no' ? null : financialData.creditScore
-                          }
-                          setFinancialData(updatedData)
+                          value={financialData.hasCreditScore ? 'yes' : 'no'}  // Ensure it's controlled by state
+                          onValueChange={(value) => {
+                            const updatedData = {
+                              ...financialData,
+                              hasCreditScore: value === 'yes',
+                              creditScore: value === 'no' ? null : financialData.creditScore,
+                            };
+                            setFinancialData(updatedData);
 
-                          // Save updated data to local storage
-                          saveToLocalStorage('financialData', updatedData)
-                        }}
-                        className="flex space-x-4">
+                            // Save updated data to local storage
+                            saveToLocalStorage('financialData', updatedData);
+                          }}
+                          className="flex space-x-4"
+                      >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem
-                            value="yes"
-                            id="hasCreditScore-yes"
-                            className="border-amber-500 text-amber-600" />
+                              value="yes"
+                              id="hasCreditScore-yes"
+                              className={`border-amber-500 text-amber-600 ${financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
+                          />
                           <Label htmlFor="hasCreditScore-yes" className="text-amber-700">Yes</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem
-                            value="no"
-                            id="hasCreditScore-no"
-                            className="border-amber-500 text-amber-600" />
+                              value="no"
+                              id="hasCreditScore-no"
+                              className={`border-amber-500 text-amber-600 ${!financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
+                          />
                           <Label htmlFor="hasCreditScore-no" className="text-amber-700">No</Label>
                         </div>
                       </RadioGroup>
