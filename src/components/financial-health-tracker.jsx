@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -7,6 +7,18 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { SmileIcon, MehIcon, FrownIcon } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'  // Replaced next/router with react-router-dom
+
+// Utility function to store data in local storage
+const saveToLocalStorage = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+// Utility function to retrieve data from local storage
+const getFromLocalStorage = (key) => {
+  const savedData = localStorage.getItem(key)
+  return savedData ? JSON.parse(savedData) : null
+}
 
 const CircularProgress = ({ value, max, size = 200, strokeWidth = 15, color = "text-amber-500" }) => (
   <div className="relative" style={{ width: size, height: size }}>
@@ -48,7 +60,17 @@ export function FinancialHealthTrackerComponent() {
     hasCreditScore: false,
     creditScore: null
   })
+
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const navigate = useNavigate()  // Use react-router-dom's navigate
+
+  // Load saved data from local storage on component mount
+  useEffect(() => {
+    const savedData = getFromLocalStorage('financialData')
+    if (savedData) {
+      setFinancialData(savedData)
+    }
+  }, [])
 
   const calculateFinancialScore = () => {
     let score = 0
@@ -78,18 +100,27 @@ export function FinancialHealthTrackerComponent() {
     if (score >= 50) return <img src='/src/assets/surprisefoxcircle.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
     if (score >= 25 ) return <img src='/src/assets/sickfoxycircle.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
     return <img src='/src/assets/sadfoxycircle.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
+
   }
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target
-    setFinancialData(prev => ({
-      ...prev,
+    const updatedData = {
+      ...financialData,
       [name]: type === 'number' ? parseFloat(value) || 0 : value
-    }))
+    }
+    setFinancialData(updatedData)
+    
+    // Save updated data to local storage
+    saveToLocalStorage('financialData', updatedData)
   }
 
   const handleSwitchChange = (name) => (checked) => {
-    setFinancialData(prev => ({ ...prev, [name]: checked }))
+    const updatedData = { ...financialData, [name]: checked }
+    setFinancialData(updatedData)
+    
+    // Save updated data to local storage
+    saveToLocalStorage('financialData', updatedData)
   }
 
   const handleSubmit = (e) => {
@@ -97,9 +128,15 @@ export function FinancialHealthTrackerComponent() {
     setIsSubmitted(true)
   }
 
+  // Function to navigate to chatbot with context
+  const handleFoxyAdviceClick = () => {
+    // Save the financial data to local storage and navigate to chatbot
+    saveToLocalStorage('financialContext', financialData)
+    navigate('/chatwithadvice')  // Navigate to chatbot route
+  }
+
   return (
-    (<div
-      className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
+    (<div className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
         <AnimatePresence>
           {!isSubmitted && (
@@ -154,11 +191,15 @@ export function FinancialHealthTrackerComponent() {
                       <RadioGroup
                         defaultValue={financialData.hasCreditScore ? 'yes' : 'no'}
                         onValueChange={(value) => {
-                          setFinancialData(prev => ({
-                            ...prev,
+                          const updatedData = {
+                            ...financialData,
                             hasCreditScore: value === 'yes',
-                            creditScore: value === 'no' ? null : prev.creditScore
-                          }))
+                            creditScore: value === 'no' ? null : financialData.creditScore
+                          }
+                          setFinancialData(updatedData)
+
+                          // Save updated data to local storage
+                          saveToLocalStorage('financialData', updatedData)
                         }}
                         className="flex space-x-4">
                         <div className="flex items-center space-x-2">
@@ -225,7 +266,15 @@ export function FinancialHealthTrackerComponent() {
                     </div>
                     <Button
                       className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white"
-                      onClick={() => setIsSubmitted(false)}>Update Data</Button>
+                      onClick={() => setIsSubmitted(false)}>
+                      Update Data
+                  </Button>
+                    {/* Buttons to ask for advice or start regular chat */}
+                    <Button
+                      className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white"
+                      onClick={handleFoxyAdviceClick}>
+                      Want Foxy's Advice?
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
