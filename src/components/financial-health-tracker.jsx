@@ -61,6 +61,7 @@ export function FinancialHealthTrackerComponent() {
     creditScore: null
   })
 
+
   const [isSubmitted, setIsSubmitted] = useState(false)
   const navigate = useNavigate()  // Use react-router-dom's navigate
 
@@ -154,9 +155,10 @@ export function FinancialHealthTrackerComponent() {
                         type="number"
                         id="householdIncome"
                         name="householdIncome"
-                        value={financialData.householdIncome}
+                        value={financialData.householdIncome || ''}  // Use empty string if no value
                         onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" />
+                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="householdSpending" className="text-amber-700">Household Spending</Label>
@@ -164,9 +166,10 @@ export function FinancialHealthTrackerComponent() {
                         type="number"
                         id="householdSpending"
                         name="householdSpending"
-                        value={financialData.householdSpending}
+                        value={financialData.householdSpending || ''}  // Use empty string if no value
                         onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" />
+                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
+                      />
                     </div>
                     <div>
                       <Label htmlFor="dependents" className="text-amber-700"># of Dependents</Label>
@@ -174,9 +177,10 @@ export function FinancialHealthTrackerComponent() {
                         type="number"
                         id="dependents"
                         name="dependents"
-                        value={financialData.dependents}
+                        value={financialData.dependents || ''}  // Use empty string if no value
                         onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" />
+                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
+                      />
                     </div>
                     <div className="flex items-center space-x-2">
                       <Switch
@@ -225,9 +229,10 @@ export function FinancialHealthTrackerComponent() {
                           type="number"
                           id="creditScore"
                           name="creditScore"
-                          value={financialData.creditScore || ''}
+                          value={financialData.creditScore || ''}  // Use empty string if no value
                           onChange={handleInputChange}
-                          className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" />
+                          className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
+                        />
                       </div>
                     )}
                     <Button
