@@ -5,7 +5,6 @@ import Header from './components/Header';
 import ChatPage from './pages/ChatPage';
 import ChatbotWithAdvicePage from './pages/ChatbotWithAdvicePage';
 import { FinancialHealthTrackerComponent } from '/src/components/financial-health-tracker';
-
 function App() {
   return (
     <Router>

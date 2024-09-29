@@ -8,7 +8,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
       <Link to="/"> {/* Wrap the image in a Link to make it clickable */}
           <img src='/src/assets/prosperatitle.png' alt="Prospera Title" style={{ width: '200px', height: 'auto' }} />
-       </Link>        
+       </Link>
       <div className="flex items-center space-x-2 text-amber-700">
           <span className="hidden sm:inline">Have questions? </span>
           <Link to="/chat" className="text-amber-500 hover:text-amber-600 hover:bg-amber-100">

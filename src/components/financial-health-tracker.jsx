@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
-import { SmileIcon, MehIcon, FrownIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'  // Replaced next/router with react-router-dom
 
 // Utility function to store data in local storage
@@ -136,129 +135,159 @@ export function FinancialHealthTrackerComponent() {
     navigate('/chatwithadvice')  // Navigate to chatbot route
   }
 
+  // Heading text to be displayed letter by letter
+  const headingText = "AI-Powered Financial Educational App for Low-Income Immigrants";
+
+// Animation configuration
+  const headingAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.03, // Delay each letter's appearance
+      },
+    }),
+  };
+
   return (
     (<div className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
         <AnimatePresence>
           {!isSubmitted && (
-            <motion.div
-              initial={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5 }}>
-              <Card className="w-full bg-amber-50 border-amber-200">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-4 text-amber-800">Enter Your Financial Data</h3>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <Label htmlFor="householdIncome" className="text-amber-700">Household Income</Label>
-                      <Input
-                        type="number"
-                        id="householdIncome"
-                        name="householdIncome"
-                        value={financialData.householdIncome || ''}  // Use empty string if no value
-                        onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="householdSpending" className="text-amber-700">Household Spending</Label>
-                      <Input
-                        type="number"
-                        id="householdSpending"
-                        name="householdSpending"
-                        value={financialData.householdSpending || ''}  // Use empty string if no value
-                        onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="dependents" className="text-amber-700"># of Dependents</Label>
-                      <Input
-                        type="number"
-                        id="dependents"
-                        name="dependents"
-                        value={financialData.dependents || ''}  // Use empty string if no value
-                        onChange={handleInputChange}
-                        className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
-                      />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Switch
-                        id="dependentsInHighschool"
-                        checked={financialData.dependentsInHighschool}
-                        onCheckedChange={handleSwitchChange('dependentsInHighschool')}
-                        className="bg-amber-300 data-[state=checked]:bg-amber-500" />
-                      <Label htmlFor="dependentsInHighschool" className="text-amber-700">Any dependents in High school?</Label>
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-amber-700">Do you have a credit score?</Label>
-                      <RadioGroup
-                          value={financialData.hasCreditScore ? 'yes' : 'no'}  // Ensure it's controlled by state
-                          onValueChange={(value) => {
-                            const updatedData = {
-                              ...financialData,
-                              hasCreditScore: value === 'yes',
-                              creditScore: value === 'no' ? null : financialData.creditScore,
-                            };
-                            setFinancialData(updatedData);
-
-                            // Save updated data to local storage
-                            saveToLocalStorage('financialData', updatedData);
-                          }}
-                          className="flex space-x-4"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                              value="yes"
-                              id="hasCreditScore-yes"
-                              className={`border-amber-500 text-amber-600 ${financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
-                          />
-                          <Label htmlFor="hasCreditScore-yes" className="text-amber-700">Yes</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                              value="no"
-                              id="hasCreditScore-no"
-                              className={`border-amber-500 text-amber-600 ${!financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
-                          />
-                          <Label htmlFor="hasCreditScore-no" className="text-amber-700">No</Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                    {financialData.hasCreditScore && (
+              <motion.div
+                  initial={{opacity: 1, scale: 1}}
+                  exit={{opacity: 0, scale: 0.8}}
+                  transition={{duration: 0.5}}>
+                <h1 className="text-2xl font-bold text-center mb-6 text-amber-900">
+                  {headingText.split("").map((char, index) => (
+                      <motion.span
+                          key={index}
+                          custom={index}
+                          initial="hidden"
+                          animate="visible"
+                          variants={headingAnimation}
+                          className="inline-block">
+                        {char === ' ' ? <span>&nbsp;</span> : char}
+                      </motion.span>
+                  ))}
+                </h1>
+                <Card className="w-full bg-amber-50 border-amber-200">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-4 text-amber-800">Enter Your Financial Data</h3>
+                    <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
-                        <Label htmlFor="creditScore" className="text-amber-700">Credit Score</Label>
+                        <Label htmlFor="householdIncome" className="text-amber-700">Household Income</Label>
                         <Input
-                          type="number"
-                          id="creditScore"
-                          name="creditScore"
-                          value={financialData.creditScore || ''}  // Use empty string if no value
-                          onChange={handleInputChange}
-                          className="border-amber-300 focus:border-amber-500 focus:ring-amber-500" 
+                            type="number"
+                            id="householdIncome"
+                            name="householdIncome"
+                            value={financialData.householdIncome || ''}  // Use empty string if no value
+                            onChange={handleInputChange}
+                            className="border-amber-300 focus:border-amber-500 focus:ring-amber-500"
                         />
                       </div>
-                    )}
-                    <Button
-                      type="submit"
-                      className="w-full bg-amber-500 hover:bg-amber-600 text-white">Calculate Financial Health</Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </motion.div>
+                      <div>
+                        <Label htmlFor="householdSpending" className="text-amber-700">Household Spending</Label>
+                        <Input
+                            type="number"
+                            id="householdSpending"
+                            name="householdSpending"
+                            value={financialData.householdSpending || ''}  // Use empty string if no value
+                            onChange={handleInputChange}
+                            className="border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="dependents" className="text-amber-700"># of Dependents</Label>
+                        <Input
+                            type="number"
+                            id="dependents"
+                            name="dependents"
+                            value={financialData.dependents || ''}  // Use empty string if no value
+                            onChange={handleInputChange}
+                            className="border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                        />
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                            id="dependentsInHighschool"
+                            checked={financialData.dependentsInHighschool}
+                            onCheckedChange={handleSwitchChange('dependentsInHighschool')}
+                            className="bg-amber-300 data-[state=checked]:bg-amber-500"/>
+                        <Label htmlFor="dependentsInHighschool" className="text-amber-700">Any dependents in High
+                          school?</Label>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-amber-700">Do you have a credit score?</Label>
+                        <RadioGroup
+                            value={financialData.hasCreditScore ? 'yes' : 'no'}  // Ensure it's controlled by state
+                            onValueChange={(value) => {
+                              const updatedData = {
+                                ...financialData,
+                                hasCreditScore: value === 'yes',
+                                creditScore: value === 'no' ? null : financialData.creditScore,
+                              };
+                              setFinancialData(updatedData);
+
+                              // Save updated data to local storage
+                              saveToLocalStorage('financialData', updatedData);
+                            }}
+                            className="flex space-x-4"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                                value="yes"
+                                id="hasCreditScore-yes"
+                                className={`border-amber-500 text-amber-600 ${financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
+                            />
+                            <Label htmlFor="hasCreditScore-yes" className="text-amber-700">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                                value="no"
+                                id="hasCreditScore-no"
+                                className={`border-amber-500 text-amber-600 ${!financialData.hasCreditScore ? 'bg-amber-500' : ''}`}
+                            />
+                            <Label htmlFor="hasCreditScore-no" className="text-amber-700">No</Label>
+                          </div>
+                        </RadioGroup>
+                      </div>
+                      {financialData.hasCreditScore && (
+                          <div>
+                            <Label htmlFor="creditScore" className="text-amber-700">Credit Score</Label>
+                            <Input
+                                type="number"
+                                id="creditScore"
+                                name="creditScore"
+                                value={financialData.creditScore || ''}  // Use empty string if no value
+                                onChange={handleInputChange}
+                                className="border-amber-300 focus:border-amber-500 focus:ring-amber-500"
+                            />
+                          </div>
+                      )}
+                      <Button
+                          type="submit"
+                          className="w-full bg-amber-500 hover:bg-amber-600 text-white">Calculate Financial
+                        Health</Button>
+                    </form>
+                  </CardContent>
+                </Card>
+              </motion.div>
           )}
         </AnimatePresence>
 
         <AnimatePresence>
           {isSubmitted && (
-            <div className="flex justify-between items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="flex-1">
-                <div>
-                  {getFinancialMood(financialScore)}
-                </div>
+              <div className="flex justify-between items-center">
+                <motion.div
+                    initial={{opacity: 0, x: -100}}
+                    animate={{opacity: 1, x: 0}}
+                    transition={{duration: 0.5, delay: 0.5}}
+                    className="flex-1">
+                  <div>
+                    {getFinancialMood(financialScore)}
+                  </div>
               </motion.div>
 
               <motion.div
