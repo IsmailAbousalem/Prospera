@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -7,6 +7,17 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { SmileIcon, MehIcon, FrownIcon } from 'lucide-react'
+
+// Utility function to store data in local storage
+const saveToLocalStorage = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data))
+}
+
+// Utility function to retrieve data from local storage
+const getFromLocalStorage = (key) => {
+  const savedData = localStorage.getItem(key)
+  return savedData ? JSON.parse(savedData) : null
+}
 
 const CircularProgress = ({ value, max, size = 200, strokeWidth = 15, color = "text-amber-500" }) => (
   <div className="relative" style={{ width: size, height: size }}>
@@ -48,7 +59,16 @@ export function FinancialHealthTrackerComponent() {
     hasCreditScore: true,
     creditScore: 700
   })
+
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  // Load saved data from local storage on component mount
+  useEffect(() => {
+    const savedData = getFromLocalStorage('financialData')
+    if (savedData) {
+      setFinancialData(savedData)
+    }
+  }, [])
 
   const calculateFinancialScore = () => {
     let score = 0
@@ -82,14 +102,22 @@ export function FinancialHealthTrackerComponent() {
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target
-    setFinancialData(prev => ({
-      ...prev,
+    const updatedData = {
+      ...financialData,
       [name]: type === 'number' ? parseFloat(value) || 0 : value
-    }))
+    }
+    setFinancialData(updatedData)
+    
+    // Save updated data to local storage
+    saveToLocalStorage('financialData', updatedData)
   }
 
   const handleSwitchChange = (name) => (checked) => {
-    setFinancialData(prev => ({ ...prev, [name]: checked }))
+    const updatedData = { ...financialData, [name]: checked }
+    setFinancialData(updatedData)
+    
+    // Save updated data to local storage
+    saveToLocalStorage('financialData', updatedData)
   }
 
   const handleSubmit = (e) => {
@@ -154,11 +182,15 @@ export function FinancialHealthTrackerComponent() {
                       <RadioGroup
                         defaultValue={financialData.hasCreditScore ? 'yes' : 'no'}
                         onValueChange={(value) => {
-                          setFinancialData(prev => ({
-                            ...prev,
+                          const updatedData = {
+                            ...financialData,
                             hasCreditScore: value === 'yes',
-                            creditScore: value === 'no' ? null : prev.creditScore
-                          }))
+                            creditScore: value === 'no' ? null : financialData.creditScore
+                          }
+                          setFinancialData(updatedData)
+
+                          // Save updated data to local storage
+                          saveToLocalStorage('financialData', updatedData)
                         }}
                         className="flex space-x-4">
                         <div className="flex items-center space-x-2">
