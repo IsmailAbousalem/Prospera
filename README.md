@@ -1,4 +1,9 @@
-# React + Vite
+# Prospero (AI-Powered Financial Educational App for Low-Income Immigrants)
+
+## Vision
+
+## Challenges
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
