@@ -74,10 +74,10 @@ export function FinancialHealthTrackerComponent() {
   const financialScore = calculateFinancialScore()
 
   const getFinancialMood = (score) => {
-    if (score > 750) return <img src='/src/assets/moneyfoxcircle.png' alt="Happy Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    if (score > 500) return <img src='/src/assets/surprisefoxcircle.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    if (score > 250) return <img src='/src/assets/sickfoxycircle.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
-    return <img src='/src/assets/sadfoxycircle.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
+    if (score > 750) return <img src='/src/assets/happy1.png' alt="Happy Foxy" style={{ width: '300px', height: 'auto' }}/>;
+    if (score > 500) return <img src='/src/assets/sur1.png' alt="Surprise Foxy" style={{ width: '300px', height: 'auto' }}/>;
+    if (score > 250) return <img src='/src/assets/sick1.png' alt="Sick Foxy" style={{ width: '300px', height: 'auto' }}/>;
+    return <img src='/src/assets/sad1.png' alt="Sad Foxy" style={{ width: '300px', height: 'auto' }}></img>;
   }
 
   const handleInputChange = (e) => {
