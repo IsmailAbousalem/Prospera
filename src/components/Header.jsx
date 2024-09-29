@@ -12,7 +12,7 @@ export default function Header() {
           <Link to="/chat" className="text-amber-500 hover:text-amber-600 hover:bg-amber-100">
             Ask Foxy!
           </Link>
-          <Link>
+          <Link to="/chat" >
           <img src='/src/assets/Question.png' alt="Foxy" style={{ width: '40px', height: 'auto' }}/>
           </Link>
         </div>
