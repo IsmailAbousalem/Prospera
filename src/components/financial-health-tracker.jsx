@@ -74,9 +74,10 @@ export function FinancialHealthTrackerComponent() {
   const financialScore = calculateFinancialScore()
 
   const getFinancialMood = (score) => {
-    if (score > 750) return <SmileIcon className="w-24 h-24 text-amber-500" />;
-    if (score > 500) return <MehIcon className="w-24 h-24 text-amber-400" />;
-    return <FrownIcon className="w-24 h-24 text-amber-300" />;
+    if (score > 750) return <img src='/src/assets/moneyfoxcircle.png' alt="Happy Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score > 500) return <img src='/src/assets/surprisefoxcircle.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score > 250) return <img src='/src/assets/sickfoxycircle.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    return <img src='/src/assets/sadfoxycircle.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
   }
 
   const handleInputChange = (e) => {
@@ -206,8 +207,7 @@ export function FinancialHealthTrackerComponent() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="flex-1">
-                <div
-                  className="w-48 h-48 bg-amber-100 rounded-full flex items-center justify-center">
+                <div>
                   {getFinancialMood(financialScore)}
                 </div>
               </motion.div>
