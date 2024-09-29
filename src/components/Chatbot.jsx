@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { SendIcon } from 'lucide-react';
+import ReactMarkdown from 'react-markdown'; // Import react-markdown for Markdown rendering
 
 // Utility function to save chat history to local storage
 const saveChatToLocalStorage = (messages) => {
@@ -106,7 +107,8 @@ export default function FoxyBotChat() {
                       : 'bg-amber-200 text-amber-900'
                   }`}
                 >
-                  {message.text}
+                  {/* Render the message using ReactMarkdown to handle Markdown formatting */}
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
                 </div>
               </div>
             ))}
