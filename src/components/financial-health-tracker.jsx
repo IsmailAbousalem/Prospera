@@ -102,6 +102,7 @@ export function FinancialHealthTrackerComponent() {
     if (score >= 25 ) return <img src='src/assets/sick1.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
     return <img src='src/assets/sad1.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
   }
+  //change to 8080
 
   const handleInputChange = (e) => {
     const { name, value, type } = e.target
