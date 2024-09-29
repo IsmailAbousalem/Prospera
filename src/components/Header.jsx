@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="bg-amber-50 border-b border-amber-200 py-4 px-6">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-amber-800">Prospera</h1>
+      <Link to="/" className="text-2xl font-bold text-amber-800">Prospera</Link>
         <div className="flex items-center space-x-2 text-amber-700">
           <span className="hidden sm:inline">Have questions? </span>
           <Link to="/chat" className="text-amber-500 hover:text-amber-600 hover:bg-amber-100">
