@@ -88,6 +88,23 @@ export function FinancialHealthTrackerComponent({ language }) {
     navigate('/chatwithadvice');
   };
 
+  // **Dynamic Heading Text**: set based on the language prop
+  const headingText = language === 'es' 
+    ? "Aplicación educativa financiera impulsada por IA para inmigrantes de bajos ingresos" 
+    : "AI-Powered Financial Educational App for Low-Income Immigrants";
+
+  // Animation configuration
+  const headingAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.03, // Delay each letter's appearance
+      },
+    }),
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
@@ -97,6 +114,21 @@ export function FinancialHealthTrackerComponent({ language }) {
               initial={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.5 }}>
+                {/* Heading Text Animated */}
+                <h1 className="text-2xl font-bold text-center mb-6 text-amber-900">
+                  {headingText.split("").map((char, index) => (
+                      <motion.span
+                          key={index}
+                          custom={index}
+                          initial="hidden"
+                          animate="visible"
+                          variants={headingAnimation}
+                          className="inline-block">
+                        {char === ' ' ? <span>&nbsp;</span> : char}
+                      </motion.span>
+                  ))}
+                </h1>
+
               <Card className="w-full bg-amber-50 border-amber-200">
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold mb-4 text-amber-800">
