@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { SmileIcon, MehIcon, FrownIcon } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'  // Replaced next/router with react-router-dom
 
 // Utility function to store data in local storage
 const saveToLocalStorage = (key, data) => {
@@ -61,6 +62,7 @@ export function FinancialHealthTrackerComponent() {
   })
 
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const navigate = useNavigate()  // Use react-router-dom's navigate
 
   // Load saved data from local storage on component mount
   useEffect(() => {
@@ -125,9 +127,15 @@ export function FinancialHealthTrackerComponent() {
     setIsSubmitted(true)
   }
 
+  // Function to navigate to chatbot with context
+  const handleFoxyAdviceClick = () => {
+    // Save the financial data to local storage and navigate to chatbot
+    saveToLocalStorage('financialContext', financialData)
+    navigate('/chatwithadvice')  // Navigate to chatbot route
+  }
+
   return (
-    (<div
-      className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
+    (<div className="min-h-screen bg-gradient-to-br from-amber-200 to-red-200 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">
         <AnimatePresence>
           {!isSubmitted && (
@@ -257,7 +265,15 @@ export function FinancialHealthTrackerComponent() {
                     </div>
                     <Button
                       className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white"
-                      onClick={() => setIsSubmitted(false)}>Update Data</Button>
+                      onClick={() => setIsSubmitted(false)}>
+                      Update Data
+                  </Button>
+                    {/* Buttons to ask for advice or start regular chat */}
+                    <Button
+                      className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white"
+                      onClick={handleFoxyAdviceClick}>
+                      Want Foxy's Advice?
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
