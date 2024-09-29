@@ -53,12 +53,12 @@ const CircularProgress = ({ value, max, size = 200, strokeWidth = 15, color = "t
 
 export function FinancialHealthTrackerComponent() {
   const [financialData, setFinancialData] = useState({
-    householdIncome: 50000,
-    householdSpending: 40000,
-    dependents: 2,
+    householdIncome: null,
+    householdSpending: null,
+    dependents: null,
     dependentsInHighschool: false,
-    hasCreditScore: true,
-    creditScore: 700
+    hasCreditScore: false,
+    creditScore: null
   })
 
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -74,12 +74,12 @@ export function FinancialHealthTrackerComponent() {
 
   const calculateFinancialScore = () => {
     let score = 0
-    const maxScore = 1000
+    const maxScore = 100
 
     const incomeToSpendingRatio = financialData.householdIncome / financialData.householdSpending
-    score += Math.min(incomeToSpendingRatio * 100, 300)
+    score += Math.min(incomeToSpendingRatio * 10, 30)
 
-    const dependentScore = Math.max(200 - financialData.dependents * 50, 0)
+    const dependentScore = Math.max(20 - financialData.dependents * 5, 0)
     score += dependentScore
 
     if (financialData.dependentsInHighschool) {
@@ -87,7 +87,7 @@ export function FinancialHealthTrackerComponent() {
     }
 
     if (financialData.hasCreditScore && financialData.creditScore !== null) {
-      score += (financialData.creditScore / 850) * 500
+      score += (financialData.creditScore / 850) * 50
     }
 
     return Math.round(Math.min(Math.max(score, 0), maxScore));
@@ -96,10 +96,11 @@ export function FinancialHealthTrackerComponent() {
   const financialScore = calculateFinancialScore()
 
   const getFinancialMood = (score) => {
-    if (score > 750) return <img src='/src/assets/happy1.png' alt="Happy Foxy" style={{ width: '300px', height: 'auto' }}/>;
-    if (score > 500) return <img src='/src/assets/sur1.png' alt="Surprise Foxy" style={{ width: '300px', height: 'auto' }}/>;
-    if (score > 250) return <img src='/src/assets/sick1.png' alt="Sick Foxy" style={{ width: '300px', height: 'auto' }}/>;
-    return <img src='/src/assets/sad1.png' alt="Sad Foxy" style={{ width: '300px', height: 'auto' }}></img>;
+    if (score >= 75) return <img src='/src/assets/moneyfoxcircle.png' alt="Happy Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score >= 50) return <img src='/src/assets/surprisefoxcircle.png' alt="Surprise Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    if (score >= 25 ) return <img src='/src/assets/sickfoxycircle.png' alt="Sick Foxy" style={{ width: '350px', height: 'auto' }}/>;
+    return <img src='/src/assets/sadfoxycircle.png' alt="Sad Foxy" style={{ width: '350px', height: 'auto' }}></img>;
+
   }
 
   const handleInputChange = (e) => {
@@ -261,7 +262,7 @@ export function FinancialHealthTrackerComponent() {
                   <CardContent className="p-6">
                     <h3 className="text-lg font-semibold mb-4 text-center text-amber-800">Financial Health Score</h3>
                     <div className="flex justify-center mb-6">
-                      <CircularProgress value={financialScore} max={1000} size={200} color="text-amber-500" />
+                      <CircularProgress value={financialScore} max={100} size={200} color="text-amber-500" />
                     </div>
                     <Button
                       className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white"
