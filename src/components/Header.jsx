@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="bg-amber-50 border-b border-amber-200 py-4 px-6">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <img src='/src/assets/prosperatitle.png' alt="Prospera Title" style={{ width: '200px', height: 'auto' }}/>
+      <img src='/src/assets/prosperatitle.png' alt="Prospera Title" style={{ width: '220px', height: 'auto' }}/>
         <div className="flex items-center space-x-2 text-amber-700">
           <span className="hidden sm:inline">Have questions? </span>
           <Link to="/chat" className="text-amber-500 hover:text-amber-600 hover:bg-amber-100">
